@@ -1,0 +1,8 @@
+.serverless/*.json
+.serverless/*.js
+.history
+out
+node_modules
+.nyc_output
+dist
+coverage

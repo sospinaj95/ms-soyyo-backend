@@ -1,0 +1,3595 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2.0.0",
+    "title": "Account Documentation",
+    "description": "doc api for the management accounts.",
+    "license": {
+      "name": "Puntos Colombia S.A.S",
+      "url": "https://www.puntoscolombia.com"
+    }
+  },
+  "basePath": "//",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/accounts/{documentNumber}/memberdata": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "operationId": "AccountManagement_GetMemberData",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "documentNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "documentType",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MemberDataResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        }
+      }
+    },
+    "/accounts/{documentNumber}/memberstatus": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "description": "Get status member",
+        "parameters": [
+          {
+            "name": "documentNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "documentType",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MemberStatusResponse"
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/IdentifierDoesNotExist"
+            }
+          }
+        }
+      }
+    },
+    "/accounts/me": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "description": "Get data about account",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "base64",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/accounts": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "description": "Create Account",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "account",
+            "description": "Data about new Account",
+            "schema": {
+              "$ref": "#/definitions/CreateAccountRequest"
+            },
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "create account response",
+            "schema": {
+              "$ref": "#/definitions/CreateAccountResponse"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/UnprocessableEntity"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "description": "Update Account",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "account",
+            "description": "Data account",
+            "schema": {
+              "$ref": "#/definitions/UpdateAccountRequest"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "base64",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "Update success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/accounts/me/transactions": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "description": "Get report of account transactions",
+        "parameters": [
+          {
+            "name": "date_from",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transactionType",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "total_points_from",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "total_points_to",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "total_points_not_equal",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "base64",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "GetExcelFile",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Transactions report without excel file",
+            "schema": {
+              "$ref": "#/definitions/TransactionsResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/accounts/migrated": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "description": "Get Migrated Account",
+        "parameters": [
+          {
+            "name": "documentNo",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "documentType",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Get account success",
+            "schema": {
+              "$ref": "#/definitions/MigratedAccountRespone"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "description": "Activate Migrated Account",
+        "parameters": [
+          {
+            "name": "account",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MigratedAccountRequest"
+            }
+          },
+          {
+            "name": "documentNo",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "documentType",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "Activated account success"
+          },
+          "410": {
+            "description": "Customer was already activated",
+            "schema": {
+              "$ref": "#/definitions/IdentifierDoesNotExist"
+            }
+          }
+        }
+      }
+    },
+    "/accounts/migratedpos": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "description": "Get Migrated Account Pos",
+        "parameters": [
+          {
+            "name": "documentNo",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "documentType",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Get account Pos success",
+            "schema": {
+              "$ref": "#/definitions/MigratedAccountRespone"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "description": "Activate Migrated Account Pos",
+        "parameters": [
+          {
+            "name": "account",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MigratedAccountRequest"
+            }
+          },
+          {
+            "name": "documentNo",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "documentType",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "Activated account success Post"
+          },
+          "410": {
+            "description": "Customer was already activated",
+            "schema": {
+              "$ref": "#/definitions/IdentifierDoesNotExist"
+            }
+          }
+        }
+      }
+    },
+    "/accounts/me/beginidentityvalidation": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "description": "Validate if account user is allowed for generate OTP Code, generate OTP code and to notify by sms or email the value of OTP code",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "data",
+            "description": "data about user,method to use  for notification and OTPActions",
+            "schema": {
+              "$ref": "#/definitions/BeginValidationRequest"
+            },
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Begin validation success",
+            "schema": {
+              "$ref": "#/definitions/BeginValidatonResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/IdentifierDoesNotExist"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/IdentifierDoesNotExist"
+            }
+          }
+        }
+      }
+    },
+    "/accounts/me/validateidentity": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "description": "Validate if OTP code is validet for User",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "data",
+            "description": "data about OTP Code,user data and OTPActions",
+            "schema": {
+              "$ref": "#/definitions/ValidateidentityRequest"
+            },
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "validate identity success",
+            "schema": {
+              "$ref": "#/definitions/ValidateIdentityResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/IdentifierDoesNotExist"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/IdentifierDoesNotExist"
+            }
+          }
+        }
+      }
+    },
+    "/accounts/me/pointsoperations": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "description": "Get data about Points Operations",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "base64",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Get Points Operations success",
+            "schema": {
+              "$ref": "#/definitions/GetPointsOperationsResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "description": "Transfer points from account to other account",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "data",
+            "description": "data about accounts to transfer and amount point",
+            "schema": {
+              "$ref": "#/definitions/PointsTransferRequest"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "base64",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "Points transfer success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "UNPROCESSABLE ENTITY",
+            "schema": {
+              "$ref": "#/definitions/UnprocessableEntity"
+            }
+          }
+        }
+      }
+    },
+    "/accounts/auditinfo": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "description": "Get Account AuditInfo",
+        "parameters": [
+          {
+            "name": "documentNo",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "documentType",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Get account success",
+            "schema": {
+              "$ref": "#/definitions/AuditInfoAccountRespone"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestErrorDocument"
+            }
+          },
+          "400 Error": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestError"
+            }
+          }
+        }
+      }
+    },
+    "/viajesexito/redirect": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "description": "Generate url to Viajes Exito depend on type of travel",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "fields",
+            "description": "data about type of travel (subAction)",
+            "schema": {
+              "$ref": "#/definitions/RedirectViajesExitoRequest"
+            },
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        }
+      }
+    },
+    "/accounts/me/identifiers/{identifierId}/block": {
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "description": "To Block account",
+        "parameters": [
+          {
+            "name": "identifierId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "format": "base64",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "Block Account success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/accounts/validateexpedition": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "Validate if Date and City correspond to table BancoCodes in Dynamo and execute solution through TransUnion or Clm",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "content",
+            "description": "Data about info user,date, City and type solution",
+            "schema": {
+              "$ref": "#/definitions/ValidateExpeditionRequest"
+            },
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Result solution process",
+            "schema": {
+              "$ref": "#/definitions/ValidateExpeditionResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        }
+      }
+    },
+    "/ivr-api/acceptHabeasData": {
+      "put": {
+        "tags": [
+          "Ally"
+        ],
+        "description": "Validate if accept Habeas Data",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "content",
+            "description": "Document Type and Document Number of member",
+            "schema": {
+              "$ref": "#/definitions/BasicParameters"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "CA-Channel",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "Habeas Data success"
+          },
+          "404": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/IdentifierDoesNotExist"
+            }
+          }
+        }
+      }
+    },
+    "/transunion/validation": {
+      "post": {
+        "tags": [
+          "Ally"
+        ],
+        "description": "Validate TransUnion procees",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Body",
+            "description": "data about trasnunion",
+            "schema": {
+              "$ref": "#/definitions/TransUnionsValidationRequest"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "CA-Channel",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Validation TransUnion success",
+            "schema": {
+              "$ref": "#/definitions/ResponseBody"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        }
+      }
+    },
+    "/transunion/v2/validation": {
+      "post": {
+        "tags": [
+          "Ally"
+        ],
+        "description": "Validate TransUnion procees this version compare lastname, expedition date and expedition  city",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Body",
+            "description": "data about trasnunion",
+            "schema": {
+              "$ref": "#/definitions/TransUnionsV2ValidationRequest"
+            },
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Validation TransUnion success",
+            "schema": {
+              "$ref": "#/definitions/ValidationTransunionV2ResponseBody"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        }
+      }
+    },
+    "/content/pointtransfer": {
+      "get": {
+        "tags": [
+          "Content"
+        ],
+        "description": "Get data about pointTranfer contenful aliados.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Get pointTranfer success",
+            "schema": {
+              "$ref": "#/definitions/ResponseGetPointTransfer"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/acc-api/dictionaries/{id}": {
+      "get": {
+        "tags": [
+          "Ally"
+        ],
+        "description": "Dictionaries",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Code to get from array of dictionary elements"
+          },
+          {
+            "in": "header",
+            "name": "Accept-Language",
+            "type": "string",
+            "description": "es or en default en"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Diccionaries success",
+            "schema": {
+              "$ref": "#/definitions/ResponseDictionaries"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/VerifyDocumentOtpTransUnion": {
+      "post": {
+        "tags": [
+          "OtpTransUnion"
+        ],
+        "description": "Verify Document OtpTransUnion",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Body",
+            "description": "data about document validate trasnUnion",
+            "schema": {
+              "$ref": "#/definitions/VerifyTransUnionRequest"
+            },
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Validation TransUnion success",
+            "schema": {
+              "$ref": "#/definitions/VerifyTransUnionResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "$ref": "#/definitions/VerifyTransUnionResponse"
+            }
+          }
+        }
+      }
+    },
+    "/SendOtpTransUnion": {
+      "post": {
+        "tags": [
+          "OtpTransUnion"
+        ],
+        "description": "Send OtpTransUnion",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Body",
+            "description": "data about send otp trasnUnion",
+            "schema": {
+              "$ref": "#/definitions/SendOtpTransUnionRequest"
+            },
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Validation TransUnion success",
+            "schema": {
+              "$ref": "#/definitions/SendOtpTransUnionResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        }
+      }
+    },
+    "/VerifyOtpTransUnion": {
+      "post": {
+        "tags": [
+          "OtpTransUnion"
+        ],
+        "description": "Verify OtpTransUnion",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Body",
+            "description": "data about verify otp trasnUnion",
+            "schema": {
+              "$ref": "#/definitions/ValidateOtpTransUnionRequest"
+            },
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Validation TransUnion success",
+            "schema": {
+              "$ref": "#/definitions/ValidateOtpTransUnionResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        }
+      }
+    },
+    "/ResendOtpTransUnion": {
+      "post": {
+        "tags": [
+          "OtpTransUnion"
+        ],
+        "description": "Resend OtpTransUnion",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Body",
+            "description": "data about resend otp trasnUnion",
+            "schema": {
+              "$ref": "#/definitions/ResendOtpTransUnionRequest"
+            },
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Validation TransUnion success",
+            "schema": {
+              "$ref": "#/definitions/ResendOtpTransUnionResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/BadRequest"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ResponseDictionaries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "GetPointsOperationsResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "pointTypeCode": {
+          "type": "string"
+        },
+        "expirationUnit": {
+          "type": "string"
+        },
+        "expirationAmount": {
+          "type": "number"
+        },
+        "minPackages": {
+          "type": "number"
+        },
+        "maxPackages": {
+          "type": "number"
+        },
+        "pointsInPackage": {
+          "type": "number"
+        },
+        "pricePlans": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "itemCode": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "money": {
+                "type": "number"
+              },
+              "mainPoints": {
+                "type": "number"
+              },
+              "points": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "MemberDataResponse": {
+      "type": "object",
+      "properties": {
+        "documentNo": {
+          "type": "string"
+        },
+        "documentType": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "contactInfo": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "phoneNo": {
+                "type": "string"
+              },
+              "mobilePhoneNo": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "statuses": {
+          "type": "object",
+          "properties": {
+            "accStatus": {
+              "type": "string"
+            },
+            "cusStatus": {
+              "type": "string"
+            },
+            "idnStatus": {
+              "type": "string"
+            }
+          }
+        },
+        "segments": {
+          "type": "object"
+        },
+        "mainBalance": {
+          "type": "object"
+        },
+        "balances": {
+          "type": "object"
+        },
+        "partners": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "points": {
+                "type": "string"
+              },
+              "habeasData": {
+                "type": "string"
+              },
+              "habeasDataDate": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "habeasData": {
+          "type": "string"
+        },
+        "habeasDataDate": {
+          "type": "string"
+        },
+        "habeasDataChannel": {
+          "type": "string"
+        },
+        "attributes": {
+          "type": "object"
+        },
+        "terms": {
+          "type": "string"
+        },
+        "AcceptanceRaffle": {
+          "type": "string"
+        }
+      }
+    },
+    "BeginValidatonResponse": {
+      "properties": {
+        "processed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ValidateIdentityResponse": {
+      "properties": {
+        "identityValidated": {
+          "type": "boolean"
+        }
+      }
+    },
+    "IdentifierDoesNotExist": {
+      "properties": {
+        "resultCode": {
+          "type": "string"
+        },
+        "resultMsg": {
+          "type": "string"
+        }
+      }
+    },
+    "BadRequest": {
+      "properties": {
+        "resultMsg": {
+          "type": "string"
+        },
+        "resultCode": {
+          "type": "string"
+        },
+        "success": {
+          "type": "string"
+        }
+      }
+    },
+    "BadRequestError": {
+      "properties": {
+        "errorCode": {
+          "type": "string"
+        },
+        "errorMsg": {
+          "type": "string"
+        },
+        "fieldName": {
+          "type": "string"
+        }
+      }
+    },
+    "BadRequestErrorDocument": {
+      "properties": {
+        "resultMsg": {
+          "type": "string"
+        },
+        "resultCode": {
+          "type": "string"
+        }
+      }
+    },
+    "MemberStatusResponse": {
+      "type": "object",
+      "properties": {
+        "documentNo": {
+          "type": "string"
+        },
+        "documentType": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "contactInfo": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "phoneNo": {
+                "type": "string"
+              },
+              "mobilePhoneNo": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "statuses": {
+          "type": "object",
+          "properties": {
+            "accStatus": {
+              "type": "string"
+            },
+            "cusStatus": {
+              "type": "string"
+            },
+            "idnStatus": {
+              "type": "string"
+            }
+          }
+        },
+        "segments": {
+          "type": "object"
+        },
+        "mainBalance": {
+          "type": "object"
+        },
+        "balances": {
+          "type": "object"
+        },
+        "partners": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "points": {
+                "type": "string"
+              },
+              "habeasData": {
+                "type": "string"
+              },
+              "habeasDataDate": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "habeasData": {
+          "type": "string"
+        },
+        "habeasDataDate": {
+          "type": "string"
+        },
+        "habeasDataChannel": {
+          "type": "string"
+        },
+        "attributes": {
+          "type": "object"
+        },
+        "terms": {
+          "type": "string"
+        },
+        "AcceptanceRaffle": {
+          "type": "string"
+        }
+      }
+    },
+    "GetAccountResponse": {
+      "properties": {
+        "addresses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "partnerCode": {
+                "type": "string"
+              },
+              "addressCategory": {
+                "type": "string"
+              },
+              "addressDetails": {
+                "type": "string"
+              },
+              "cityCode": {
+                "type": "string"
+              },
+              "cityName": {
+                "type": "string"
+              },
+              "regionCode": {
+                "type": "string"
+              },
+              "daneRegionCode": {
+                "type": "string"
+              },
+              "countryCode": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "phoneNo": {
+                "type": "string"
+              },
+              "mobilePhoneNo": {
+                "type": "string"
+              },
+              "additionalInfo": {
+                "type": "string"
+              },
+              "neighbourhood": {
+                "type": "string"
+              },
+              "socialLevel": {
+                "type": "string"
+              },
+              "emailValidated": {
+                "type": "boolean"
+              },
+              "mobileValidated": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "documentNo": {
+          "type": "string"
+        },
+        "documentType": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "birthDate": {
+          "type": "string"
+        },
+        "civilStatus": {
+          "type": "string"
+        },
+        "occupation": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "habeasData": {
+          "type": "string"
+        },
+        "habeasDataDate": {
+          "type": "string"
+        },
+        "habeasDataChannel": {
+          "type": "string"
+        },
+        "permissionEmail": {
+          "type": "string"
+        },
+        "permissionSMS": {
+          "type": "string"
+        },
+        "permissionDirectMail": {
+          "type": "string"
+        },
+        "permissionPhone": {
+          "type": "string"
+        },
+        "permissionPush": {
+          "type": "string"
+        },
+        "permissionInfo": {
+          "type": "string"
+        },
+        "permissionAdverts": {
+          "type": "string"
+        },
+        "childrenNumber": {
+          "type": "string"
+        },
+        "nationality": {
+          "type": "string"
+        },
+        "identifiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "documentNo": {
+                "type": "string"
+              },
+              "documentType": {
+                "type": "string"
+              },
+              "redemptionEnabled": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "mainAddressId": {
+          "type": "number"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "desciption": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "availableValues": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "value": {
+                "type": "string"
+              },
+              "mandatory": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "partners": {
+          "type": "string"
+        },
+        "terms": {
+          "type": "string"
+        },
+        "migratedPoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "partnerCode": {
+                "type": "string"
+              },
+              "amountBeforeConversion": {
+                "type": "number"
+              },
+              "amountAfterConversion": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "referredByCustomerId": {
+          "type": "string"
+        }
+      }
+    },
+    "CreateAccountRequest": {
+      "required": [
+        "documentNo",
+        "documentType",
+        "firstName",
+        "lastName",
+        "birthDate",
+        "civilStatus",
+        "gender",
+        "permissionEmail",
+        "permissionSMS",
+        "childrenNumber",
+        "occupation",
+        "nationality",
+        "terms",
+        "addresses",
+        "attributes",
+        "habeasData"
+      ],
+      "properties": {
+        "documentNo": {
+          "type": "string"
+        },
+        "documentType": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "birthDate": {
+          "type": "string"
+        },
+        "civilStatus": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "permissionEmail": {
+          "type": "boolean"
+        },
+        "permissionSMS": {
+          "type": "boolean"
+        },
+        "childrenNumber": {
+          "type": "number"
+        },
+        "occupation": {
+          "type": "string"
+        },
+        "nationality": {
+          "type": "string"
+        },
+        "terms": {
+          "type": "boolean"
+        },
+        "addresses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "addressCategory": {
+                "type": "string"
+              },
+              "addressDetails": {
+                "type": "string"
+              },
+              "cityCode": {
+                "type": "string"
+              },
+              "cityName": {
+                "type": "string"
+              },
+              "regionCode": {
+                "type": "string"
+              },
+              "countryCode": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "phoneNo": {
+                "type": "string"
+              },
+              "mobilePhoneNo": {
+                "type": "string"
+              },
+              "additionalInfo": {
+                "type": "string"
+              },
+              "neighbourhood": {
+                "type": "string"
+              },
+              "socialLevel": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "desciption": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "availableValues": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "value": {
+                "type": "string"
+              },
+              "mandatory": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "habeasData": {
+          "type": "boolean"
+        }
+      }
+    },
+    "CreateAccountResponse": {
+      "properties": {
+        "documentType": {
+          "type": "string"
+        },
+        "documentNumber": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "UnprocessableEntity": {
+      "properties": {
+        "resultCode": {
+          "type": "string"
+        },
+        "resultMsg": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdateAccountRequest": {
+      "required": [
+        "documentNo",
+        "documentType",
+        "customerId",
+        "firstName",
+        "lastName",
+        "birthDate",
+        "civilStatus",
+        "gender",
+        "habeasData",
+        "habeasDataDate",
+        "habeasDataChannel",
+        "permissionEmail",
+        "permissionSMS",
+        "permissionDirectMail",
+        "permissionPhone",
+        "permissionPush",
+        "permissionInfo",
+        "permissionAdverts",
+        "childrenNumber",
+        "occupation",
+        "nationality",
+        "identifiers",
+        "addresses",
+        "mainAddressId",
+        "attributes",
+        "migratedPoints",
+        "terms"
+      ],
+      "properties": {
+        "documentNo": {
+          "type": "string"
+        },
+        "documentType": {
+          "type": "string"
+        },
+        "customerId": {
+          "type": "number"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "birthDate": {
+          "type": "string"
+        },
+        "civilStatus": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "habeasData": {
+          "type": "boolean"
+        },
+        "habeasDataDate": {
+          "type": "string"
+        },
+        "habeasDataChannel": {
+          "type": "string"
+        },
+        "permissionEmail": {
+          "type": "boolean"
+        },
+        "permissionSMS": {
+          "type": "boolean"
+        },
+        "permissionDirectMail": {
+          "type": "boolean"
+        },
+        "permissionPhone": {
+          "type": "boolean"
+        },
+        "permissionPush": {
+          "type": "boolean"
+        },
+        "permissionInfo": {
+          "type": "boolean"
+        },
+        "permissionAdverts": {
+          "type": "boolean"
+        },
+        "childrenNumber": {
+          "type": "number"
+        },
+        "occupation": {
+          "type": "string"
+        },
+        "nationality": {
+          "type": "string"
+        },
+        "identifiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "documentNo": {
+                "type": "string"
+              },
+              "documentType": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "addresses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "addressCategory": {
+                "type": "string"
+              },
+              "addressDetails": {
+                "type": "string"
+              },
+              "countryCode": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "phoneNo": {
+                "type": "string"
+              },
+              "mobilePhoneNo": {
+                "type": "string"
+              },
+              "socialLevel": {
+                "type": "string"
+              },
+              "emailValidated": {
+                "type": "boolean"
+              },
+              "mobileValidated": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "mainAddressId": {
+          "type": "number"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "availableValues": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "value": {
+                "type": "string"
+              },
+              "mandatory": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "migratedPoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "partnerCode": {
+                "type": "string"
+              },
+              "amountBeforeConversion": {
+                "type": "number"
+              },
+              "amountAfterConversion": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "terms": {
+          "type": "boolean"
+        }
+      }
+    },
+    "TransactionsResponse": {
+      "type": "object",
+      "properties": {
+        "Transactions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "date": {
+                "type": "string"
+              },
+              "points": {
+                "format": "int32",
+                "type": "integer"
+              },
+              "value": {
+                "type": "string"
+              },
+              "transactionType": {
+                "type": "string"
+              },
+              "transactionStatus": {
+                "type": "string"
+              },
+              "locationName": {
+                "type": "string"
+              },
+              "partnerName": {
+                "type": "string"
+              },
+              "paymentMethod": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "string"
+                  }
+                }
+              },
+              "referredAccount": {
+                "type": "object",
+                "properties": {
+                  "accountNumber": {
+                    "type": "string"
+                  },
+                  "ownerCustomer": {
+                    "type": "string"
+                  }
+                }
+              },
+              "bin": {
+                "type": "string"
+              },
+              "mccDescription": {
+                "type": "string"
+              },
+              "commercialDescription": {
+                "type": "string"
+              },
+              "comments": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x_content_type_options": {
+          "type": "string"
+        },
+        "x_first_page": {
+          "type": "string"
+        },
+        "x_frame_options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "x_last_page": {
+          "type": "string"
+        },
+        "x_next_page": {
+          "type": "string"
+        },
+        "x_prev_page": {
+          "type": "string"
+        },
+        "x_total_count": {
+          "type": "string"
+        },
+        "x_xss_protection": {
+          "type": "string"
+        }
+      }
+    },
+    "MigratedAccountRequest": {
+      "type": "object",
+      "properties": {
+        "addresses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "partnerCode": {
+                "type": "string"
+              },
+              "addressCategory": {
+                "type": "string"
+              },
+              "addressDetails": {
+                "type": "string"
+              },
+              "cityCode": {
+                "type": "string"
+              },
+              "cityName": {
+                "type": "string"
+              },
+              "regionCode": {
+                "type": "string"
+              },
+              "daneRegionCode": {
+                "type": "string"
+              },
+              "countryCode": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "phoneNo": {
+                "type": "string"
+              },
+              "mobilePhoneNo": {
+                "type": "string"
+              },
+              "additionalInfo": {
+                "type": "string"
+              },
+              "neighbourhood": {
+                "type": "string"
+              },
+              "socialLevel": {
+                "type": "string"
+              },
+              "emailValidated": {
+                "type": "boolean"
+              },
+              "mobileValidated": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "documentNo": {
+          "type": "string"
+        },
+        "documentType": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "birthDate": {
+          "type": "string"
+        },
+        "civilStatus": {
+          "type": "string"
+        },
+        "occupation": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "habeasData": {
+          "type": "string"
+        },
+        "habeasDataDate": {
+          "type": "string"
+        },
+        "habeasDataChannel": {
+          "type": "string"
+        },
+        "permissionEmail": {
+          "type": "string"
+        },
+        "permissionSMS": {
+          "type": "string"
+        },
+        "permissionDirectMail": {
+          "type": "string"
+        },
+        "permissionPhone": {
+          "type": "string"
+        },
+        "permissionPush": {
+          "type": "string"
+        },
+        "permissionInfo": {
+          "type": "string"
+        },
+        "permissionAdverts": {
+          "type": "string"
+        },
+        "childrenNumber": {
+          "type": "string"
+        },
+        "nationality": {
+          "type": "string"
+        },
+        "identifiers": {
+          "type": "object"
+        },
+        "mainAddressId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "desciption": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "availableValues": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "value": {
+                "type": "string"
+              },
+              "mandatory": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "partners": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "points": {
+                "type": "string"
+              },
+              "habeasData": {
+                "type": "string"
+              },
+              "habeasDataDate": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "terms": {
+          "type": "string"
+        },
+        "migratedPoints": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "referredByCustomerId": {
+          "type": "string"
+        },
+        "redemptionEnabled": {
+          "type": "string"
+        }
+      }
+    },
+    "MigratedAccountRespone": {
+      "type": "object",
+      "properties": {
+        "addresses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "partnerCode": {
+                "type": "string"
+              },
+              "addressCategory": {
+                "type": "string"
+              },
+              "addressDetails": {
+                "type": "string"
+              },
+              "cityCode": {
+                "type": "string"
+              },
+              "cityName": {
+                "type": "string"
+              },
+              "regionCode": {
+                "type": "string"
+              },
+              "daneRegionCode": {
+                "type": "string"
+              },
+              "countryCode": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "phoneNo": {
+                "type": "string"
+              },
+              "mobilePhoneNo": {
+                "type": "string"
+              },
+              "additionalInfo": {
+                "type": "string"
+              },
+              "neighbourhood": {
+                "type": "string"
+              },
+              "socialLevel": {
+                "type": "string"
+              },
+              "emailValidated": {
+                "type": "boolean"
+              },
+              "mobileValidated": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "documentNo": {
+          "type": "string"
+        },
+        "documentType": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "birthDate": {
+          "type": "string"
+        },
+        "civilStatus": {
+          "type": "string"
+        },
+        "occupation": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "accountStatus": {
+          "type": "string"
+        },
+        "habeasData": {
+          "type": "string"
+        },
+        "habeasDataDate": {
+          "type": "string"
+        },
+        "habeasDataChannel": {
+          "type": "string"
+        },
+        "permissionEmail": {
+          "type": "string"
+        },
+        "permissionSMS": {
+          "type": "string"
+        },
+        "permissionDirectMail": {
+          "type": "string"
+        },
+        "permissionPhone": {
+          "type": "string"
+        },
+        "permissionPush": {
+          "type": "string"
+        },
+        "permissionInfo": {
+          "type": "string"
+        },
+        "permissionAdverts": {
+          "type": "string"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "desciption": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "availableValues": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "value": {
+                "type": "string"
+              },
+              "mandatory": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "partners": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "points": {
+                "type": "string"
+              },
+              "habeasData": {
+                "type": "string"
+              },
+              "habeasDataDate": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "terms": {
+          "type": "string"
+        },
+        "migratedPoints": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "AuditInfoAccountRespone": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "user": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string"
+          },
+          "ip": {
+            "type": "string"
+          },
+          "attributes": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "oldValue": {
+                  "type": "string"
+                },
+                "newValue": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "BeginValidationRequest": {
+      "required": [
+        "DocumentNumber",
+        "DocumentType"
+      ],
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "documentNumber": {
+          "type": "string"
+        },
+        "documentNo": {
+          "type": "string"
+        },
+        "documentType": {
+          "type": "string"
+        },
+        "otpActions": {
+          "type": "object",
+          "properties": {
+            "redeem": {
+              "type": "boolean"
+            },
+            "validate": {
+              "type": "boolean"
+            }
+          }
+        },
+        "partnerCode": {
+          "type": "string"
+        },
+        "identifierId": {
+          "type": "string"
+        },
+        "otpLength": {
+          "type": "object",
+          "properties": {
+            "fourDigits": {
+              "type": "boolean"
+            }
+          }
+        },
+        "app": {
+          "type": "object",
+          "properties": {
+            "unique_code_app": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "ValidateidentityRequest": {
+      "required": [
+        "DocumentNumber",
+        "DocumentType"
+      ],
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "documentNumber": {
+          "type": "string"
+        },
+        "documentNo": {
+          "type": "string"
+        },
+        "documentType": {
+          "type": "string"
+        },
+        "otpActions": {
+          "type": "object",
+          "properties": {
+            "redeem": {
+              "type": "boolean"
+            },
+            "validate": {
+              "type": "boolean"
+            }
+          }
+        },
+        "partnerCode": {
+          "type": "string"
+        },
+        "identifierId": {
+          "type": "string"
+        },
+        "otpLength": {
+          "type": "object",
+          "properties": {
+            "fourDigits": {
+              "type": "boolean"
+            }
+          }
+        },
+        "app": {
+          "type": "object",
+          "properties": {
+            "unique_code_app": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "PointsTransferRequest": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "targetCustomerId": {
+          "type": "string"
+        },
+        "targetDocumentNo": {
+          "type": "string"
+        },
+        "targetDocumentType": {
+          "type": "string"
+        },
+        "packages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "pricePlanCode": {
+                "type": "string"
+              },
+              "quantity": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "RedirectViajesExitoRequest": {
+      "type": "object",
+      "properties": {
+        "SubAction": {
+          "type": "string"
+        },
+        "AirCityFrom": {
+          "type": "string"
+        },
+        "AirCityTo": {
+          "type": "string"
+        },
+        "AirDepartureDate": {
+          "type": "string"
+        },
+        "AirDeparturesDates": {
+          "type": "string"
+        },
+        "Adults": {
+          "type": "string"
+        },
+        "Childs": {
+          "type": "string"
+        },
+        "Infants": {
+          "type": "string"
+        },
+        "DepartureFlexDates": {
+          "type": "string"
+        },
+        "AirlineCode": {
+          "type": "string"
+        },
+        "AccountCode": {
+          "type": "string"
+        },
+        "CabinType": {
+          "type": "string"
+        },
+        "DepartureTime": {
+          "type": "string"
+        },
+        "BaggageIncluded": {
+          "type": "string"
+        },
+        "AirReturnDate": {
+          "type": "string"
+        },
+        "AirCitiesFrom": {
+          "type": "string"
+        },
+        "AirCitiesTo": {
+          "type": "string"
+        },
+        "HotelDestination": {
+          "type": "string"
+        },
+        "HotelCheckinDate": {
+          "type": "string"
+        },
+        "HotelCheckoutDate": {
+          "type": "string"
+        },
+        "Rooms": {
+          "type": "string"
+        },
+        "HotelCode": {
+          "type": "string"
+        },
+        "PickUp": {
+          "type": "string"
+        },
+        "PickUpAux": {
+          "type": "string"
+        },
+        "PickUpDate": {
+          "type": "string"
+        },
+        "PickUpTime": {
+          "type": "string"
+        },
+        "DropOff": {
+          "type": "string"
+        },
+        "DropOffDate": {
+          "type": "string"
+        },
+        "DropOffTime": {
+          "type": "string"
+        },
+        "DiscountCode": {
+          "type": "string"
+        },
+        "VendorCode": {
+          "type": "string"
+        },
+        "DriverAge": {
+          "type": "string"
+        },
+        "RequestSettings": {
+          "type": "object",
+          "properties": {
+            "UserService": {
+              "type": "string"
+            },
+            "ShowHeader": {
+              "type": "string"
+            },
+            "BranchCode": {
+              "type": "string"
+            },
+            "SalesChannel": {
+              "type": "string"
+            },
+            "ClientID": {
+              "type": "string"
+            },
+            "LineOfBussiness": {
+              "type": "string"
+            },
+            "CaseID": {
+              "type": "string"
+            },
+            "SessionToken": {
+              "type": "string"
+            },
+            "QuoteID": {
+              "type": "string"
+            },
+            "TravelItineraryID": {
+              "type": "string"
+            },
+            "ConnectionID": {
+              "type": "string"
+            },
+            "PromoCode": {
+              "type": "string"
+            },
+            "PuntosColombiafield": {
+              "type": "object",
+              "properties": {
+                "PointReferenceNumber": {
+                  "type": "string"
+                },
+                "PointReferenceType": {
+                  "type": "string"
+                },
+                "Token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ValidateExpeditionRequest": {
+      "required": [
+        "DocumentNumber",
+        "DocumentType"
+      ],
+      "type": "object",
+      "properties": {
+        "SolutionSetId": {
+          "type": "string"
+        },
+        "SolutionSetVersion": {
+          "type": "string"
+        },
+        "IdType": {
+          "type": "string"
+        },
+        "IdNumber": {
+          "type": "string"
+        },
+        "IdExpeditionDate": {
+          "type": "string"
+        },
+        "IdExpeditionPlaceDept": {
+          "type": "string"
+        },
+        "IdExpeditionPlaceDeptDescription": {
+          "type": "string"
+        },
+        "IdExpeditionPlaceMunic": {
+          "type": "string"
+        },
+        "IdExpeditionPlaceMunicDescription": {
+          "type": "string"
+        },
+        "LastName": {
+          "type": "string"
+        },
+        "DocumentNumber": {
+          "type": "string"
+        },
+        "documentNo": {
+          "type": "string"
+        },
+        "DocumentType": {
+          "type": "string"
+        },
+        "OTPActions": {
+          "type": "object",
+          "properties": {
+            "Redeem": {
+              "type": "boolean"
+            },
+            "Validate": {
+              "type": "boolean"
+            }
+          }
+        },
+        "PartnerCode": {
+          "type": "string"
+        },
+        "identifierId": {
+          "type": "string"
+        },
+        "OTPLength": {
+          "type": "object",
+          "properties": {
+            "fourDigits": {
+              "type": "boolean"
+            }
+          }
+        },
+        "App": {
+          "type": "object",
+          "properties": {
+            "unique_code_app": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "ValidateExpeditionResponse": {
+      "type": "object",
+      "properties": {
+        "Decision": {
+          "type": "object"
+        },
+        "DSUbicaCOLData": {
+          "type": "object"
+        },
+        "ApplicationData": {
+          "type": "object"
+        },
+        "VelocityCheckData": {
+          "type": "object"
+        },
+        "FechaExpedicion": {
+          "type": "object"
+        },
+        "LugarExpedicion": {
+          "type": "object"
+        },
+        "Apellido1": {
+          "type": "object"
+        }
+      }
+    },
+    "BasicParameters": {
+      "type": "object",
+      "properties": {
+        "documentType": {
+          "type": "string"
+        },
+        "documentNo": {
+          "type": "string"
+        }
+      }
+    },
+    "TransUnionsValidationRequest": {
+      "required": [
+        "DocumentNumber",
+        "DocumentType"
+      ],
+      "type": "object",
+      "properties": {
+        "userid": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "SolutionSetId": {
+          "type": "string"
+        },
+        "SolutionSetVersion": {
+          "type": "string"
+        },
+        "IdType": {
+          "type": "string"
+        },
+        "IdNumber": {
+          "type": "string"
+        },
+        "IdExpeditionDate": {
+          "type": "string"
+        },
+        "IdExpeditionPlaceDept": {
+          "type": "string"
+        },
+        "IdExpeditionPlaceDeptDescription": {
+          "type": "string"
+        },
+        "IdExpeditionPlaceMunic": {
+          "type": "string"
+        },
+        "IdExpeditionPlaceMunicDescription": {
+          "type": "string"
+        },
+        "LastName": {
+          "type": "string"
+        },
+        "DocumentNumber": {
+          "type": "string"
+        },
+        "documentNo": {
+          "type": "string"
+        },
+        "DocumentType": {
+          "type": "string"
+        },
+        "OTPActions": {
+          "type": "object",
+          "properties": {
+            "Redeem": {
+              "type": "boolean"
+            },
+            "Validate": {
+              "type": "boolean"
+            }
+          }
+        },
+        "PartnerCode": {
+          "type": "string"
+        },
+        "identifierId": {
+          "type": "string"
+        },
+        "OTPLength": {
+          "type": "object",
+          "properties": {
+            "fourDigits": {
+              "type": "boolean"
+            }
+          }
+        },
+        "App": {
+          "type": "object",
+          "properties": {
+            "unique_code_app": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "TransUnionsV2ValidationRequest": {
+      "required": [
+        "IdType",
+        "IdNumber",
+        "IdExpeditionDate",
+        "IdExpeditionPlaceMunicDescription",
+        "LastName",
+        "SolutionSetId"
+      ],
+      "type": "object",
+      "properties": {
+        "IdType": {
+          "type": "string",
+          "enum": [
+            "1: Cédula de Ciudadanía",
+            "3: Cédula de Extranjería"
+          ]
+        },
+        "IdNumber": {
+          "type": "string"
+        },
+        "IdExpeditionDate": {
+          "type": "string",
+          "description": "Format: dd/mm/aaaa"
+        },
+        "IdExpeditionPlaceMunicDescription": {
+          "type": "string"
+        },
+        "LastName": {
+          "type": "string"
+        },
+        "SolutionSetId": {
+          "type": "string",
+          "enum": [
+            "106"
+          ]
+        }
+      },
+      "example": {
+        "IdType": "1",
+        "IdNumber": "12345678",
+        "IdExpeditionDate": "19/01/2022",
+        "IdExpeditionPlaceMunicDescription": "Envigado",
+        "LastName": "Perez",
+        "SolutionSetId": "106"
+      }
+    },
+    "ResponseBody": {
+      "type": "object",
+      "properties": {
+        "Decision": {
+          "type": "object"
+        },
+        "DSUbicaCOLData": {
+          "type": "object"
+        },
+        "ApplicationData": {
+          "type": "object"
+        },
+        "VelocityCheckData": {
+          "type": "object"
+        },
+        "FechaExpedicion": {
+          "type": "object"
+        },
+        "LugarExpedicion": {
+          "type": "object"
+        },
+        "Apellido1": {
+          "type": "object"
+        }
+      }
+    },
+    "ValidationTransunionV2ResponseBody": {
+      "type": "object",
+      "properties": {
+        "Decision": {
+          "type": "string",
+          "enum": [
+            "Pass",
+            "Fail"
+          ]
+        },
+        "Apellido1": {
+          "type": "string"
+        },
+        "Apellido2": {
+          "type": "string"
+        },
+        "Nombre1": {
+          "type": "string"
+        },
+        "Nombre2": {
+          "type": "string"
+        }
+      }
+    },
+    "ResponseGetPointTransfer": {
+      "type": "object",
+      "properties": {
+        "travels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "product": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "imageUrl": {
+                "type": "string"
+              },
+              "visible": {
+                "type": "boolean"
+              },
+              "fisicalredirect": {
+                "type": "boolean"
+              },
+              "uatUrl": {
+                "type": "string"
+              },
+              "prodUrl": {
+                "type": "boolean"
+              },
+              "prod": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string"
+                  }
+                }
+              },
+              "uat": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "carrusel": {
+          "type": "object",
+          "properties": {
+            "Order": {
+              "type": "string"
+            },
+            "WebImage": {
+              "type": "string"
+            },
+            "TextImage": {
+              "type": "string"
+            },
+            "MobileImage": {
+              "type": "string"
+            },
+            "UrlRedirect": {
+              "type": "string"
+            }
+          }
+        },
+        "aliados": {
+          "type": "object",
+          "properties": {
+            "banner": {
+              "type": "string"
+            },
+            "Productbanner": {
+              "type": "string"
+            },
+            "bannerUrl": {
+              "type": "string"
+            },
+            "productBannerUrl": {
+              "type": "string"
+            },
+            "partnerCode": {
+              "type": "string"
+            },
+            "locationCode": {
+              "type": "string"
+            },
+            "partnerName": {
+              "type": "string"
+            },
+            "suscriptionWebSite": {
+              "type": "string"
+            },
+            "programId": {
+              "type": "string"
+            },
+            "products": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "urlRedirect": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "boolean"
+                  },
+                  "elite": {
+                    "type": "object",
+                    "properties": {
+                      "Niveles": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "nombre": {
+                              "type": "string"
+                            },
+                            "puntos": {
+                              "type": "string"
+                            },
+                            "imageUrl": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "logo": {
+                    "type": "string"
+                  },
+                  "urlLogo": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "termsconditions": {
+                    "type": "string"
+                  },
+                  "termsandconditions": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "visible": {
+              "type": "boolean"
+            }
+          }
+        },
+        "TitleShown": {
+          "type": "string"
+        },
+        "IntroductionText": {
+          "type": "string"
+        },
+        "bannerUrl": {
+          "type": "string"
+        },
+        "errorMessage": {
+          "type": "string"
+        }
+      }
+    },
+    "VerifyTransUnionRequest": {
+      "required": [
+        "IdType",
+        "IdNumber",
+        "RecentPhoneNumber"
+      ],
+      "type": "object",
+      "properties": {
+        "IdType": {
+          "type": "string"
+        },
+        "IdNumber": {
+          "type": "string"
+        },
+        "RecentPhoneNumber": {
+          "type": "string"
+        }
+      }
+    },
+    "VerifyTransUnionResponse": {
+      "type": "object",
+      "properties": {
+        "Decision": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "StatusAutentication": {
+          "type": "string"
+        },
+        "ApplicationId": {
+          "type": "string"
+        },
+        "CurrentQueue": {
+          "type": "string"
+        },
+        "HasError": {
+          "type": "string"
+        },
+        "MobilePhoneList": {
+          "type": "string"
+        },
+        "LandLineList": {
+          "type": "string"
+        },
+        "VelocityCheckReason": {
+          "type": "object"
+        },
+        "OTPReasons": {
+          "type": "object"
+        },
+        "IDMReasonCodes": {
+          "type": "object"
+        },
+        "IDVReasonsCode": {
+          "type": "object"
+        },
+        "IDMOutcome": {
+          "type": "string"
+        },
+        "InputValReasonCodes": {
+          "type": "object"
+        },
+        "OtpCode": {
+          "type": "string"
+        },
+        "Delay": {
+          "type": "string"
+        },
+        "ErrorInfo": {
+          "type": "string"
+        }
+      }
+    },
+    "SendOtpTransUnionRequest": {
+      "required": [
+        "ApplicationId",
+        "RecentPhoneNumber",
+        "ValidationMethod"
+      ],
+      "type": "object",
+      "properties": {
+        "ApplicationId": {
+          "type": "string"
+        },
+        "RecentPhoneNumber": {
+          "type": "string"
+        },
+        "ValidationMethod": {
+          "type": "string"
+        }
+      }
+    },
+    "SendOtpTransUnionResponse": {
+      "type": "object",
+      "properties": {
+        "Decision": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "StatusAutentication": {
+          "type": "string"
+        },
+        "ApplicationId": {
+          "type": "string"
+        },
+        "CurrentQueue": {
+          "type": "string"
+        },
+        "HasError": {
+          "type": "string"
+        },
+        "MobilePhoneList": {
+          "type": "string"
+        },
+        "LandLineList": {
+          "type": "string"
+        },
+        "VelocityCheckReason": {
+          "type": "object"
+        },
+        "OTPReasons": {
+          "type": "object"
+        },
+        "IDMReasonCodes": {
+          "type": "object"
+        },
+        "IDVReasonsCode": {
+          "type": "object"
+        },
+        "IDMOutcome": {
+          "type": "string"
+        },
+        "InputValReasonCodes": {
+          "type": "object"
+        },
+        "OtpCode": {
+          "type": "string"
+        },
+        "Delay": {
+          "type": "string"
+        },
+        "ErrorInfo": {
+          "type": "string"
+        }
+      }
+    },
+    "ValidateOtpTransUnionRequest": {
+      "required": [
+        "ApplicationId",
+        "PinNumber"
+      ],
+      "type": "object",
+      "properties": {
+        "ApplicationId": {
+          "type": "string"
+        },
+        "PinNumber": {
+          "type": "string"
+        }
+      }
+    },
+    "ValidateOtpTransUnionResponse": {
+      "type": "object",
+      "properties": {
+        "Decision": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "StatusAutentication": {
+          "type": "string"
+        },
+        "ApplicationId": {
+          "type": "string"
+        },
+        "CurrentQueue": {
+          "type": "string"
+        },
+        "HasError": {
+          "type": "string"
+        },
+        "MobilePhoneList": {
+          "type": "string"
+        },
+        "LandLineList": {
+          "type": "string"
+        },
+        "VelocityCheckReason": {
+          "type": "object"
+        },
+        "OTPReasons": {
+          "type": "object"
+        },
+        "IDMReasonCodes": {
+          "type": "object"
+        },
+        "IDVReasonsCode": {
+          "type": "object"
+        },
+        "IDMOutcome": {
+          "type": "string"
+        },
+        "InputValReasonCodes": {
+          "type": "object"
+        },
+        "OtpCode": {
+          "type": "string"
+        },
+        "Delay": {
+          "type": "string"
+        },
+        "ErrorInfo": {
+          "type": "string"
+        }
+      }
+    },
+    "ResendOtpTransUnionRequest": {
+      "required": [
+        "ApplicationId"
+      ],
+      "type": "object",
+      "properties": {
+        "ApplicationId": {
+          "type": "string"
+        }
+      }
+    },
+    "ResendOtpTransUnionResponse": {
+      "type": "object",
+      "properties": {
+        "Decision": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "StatusAutentication": {
+          "type": "string"
+        },
+        "ApplicationId": {
+          "type": "string"
+        },
+        "CurrentQueue": {
+          "type": "string"
+        },
+        "HasError": {
+          "type": "string"
+        },
+        "MobilePhoneList": {
+          "type": "string"
+        },
+        "LandLineList": {
+          "type": "string"
+        },
+        "VelocityCheckReason": {
+          "type": "object"
+        },
+        "OTPReasons": {
+          "type": "object"
+        },
+        "IDMReasonCodes": {
+          "type": "object"
+        },
+        "IDVReasonsCode": {
+          "type": "object"
+        },
+        "IDMOutcome": {
+          "type": "string"
+        },
+        "InputValReasonCodes": {
+          "type": "object"
+        },
+        "OtpCode": {
+          "type": "string"
+        },
+        "Delay": {
+          "type": "string"
+        },
+        "ErrorInfo": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

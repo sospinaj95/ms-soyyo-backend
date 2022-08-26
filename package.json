@@ -1,0 +1,58 @@
+{
+  "name": "soyyo-api",
+  "version": "1.1.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "./node_modules/.bin/mocha test/unit-test/ --timeout=30000 || true",
+    "test:integration": "./node_modules/.bin/mocha test/integration-test/ --timeout=30000 || true",
+    "test:coverage": "nyc --reporter=lcov --report-dir=test/coverage npm run test",
+    "sonar-scanner": "node_modules/sonar-scanner/bin/sonar-scanner"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sospinaj95/ms-soyyo-backend"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.580.0",
+    "bcrypt": "4.0.1",
+    "body-parser": "^1.19.0",
+    "contentful": "^8.2.1",
+    "cryptlib": "^1.0.3",
+    "excel4node": "^1.7.2",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "helmet": "^3.21.2",
+    "joi": "^17.2.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.0",
+    "mssql": "^6.2.3",
+    "newrelic": "^6.7.1",
+    "query-string": "^7.1.1",
+    "request": "^2.88.0",
+    "swagger-ui-express": "^4.1.4",
+    "uuid": "^7.0.3",
+    "winston": "^3.8.1",
+    "xml2json": "^0.12.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^8.1.0",
+    "jest": "^27.4.7",
+    "mocha": "^7.2.0",
+    "nodemon": "^2.0.2",
+    "nyc": "^15.0.0",
+    "sinon": "^10.0.0",
+    "sonar-scanner": "^3.1.0",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "node",
+    "testTimeout": 30000
+  },
+  "author": "",
+  "license": "ISC"
+}

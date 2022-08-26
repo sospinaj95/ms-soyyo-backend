@@ -1,0 +1,16 @@
+{
+    "source": {
+      "include": [
+        "src/adapters",
+        "src/services",
+        "src/services/facades",
+        "src/services/strategies",
+        "src/shared",
+        "src/shared/pco-auth",
+        "src/repositories"
+      ],
+      "exclude": [],
+      "includePattern": ".+\\.js(doc|x)?$",
+      "excludePattern": "(^|\\/|\\\\)_"
+    }
+  }
